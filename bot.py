@@ -1,8 +1,15 @@
 import nextcord 
 from nextcord.ext import commands
 import os
+import json 
 
-bot = commands.Bot(command_prefix='', intents=nextcord.Intents.all())
+with open('config.json', 'r') as f:
+    CONFIG = json.loads(f)
+
+
+
+
+bot = commands.Bot(command_prefix=CONFIG['prefix'], intents=nextcord.Intents.all())
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f'cogs.{filename[:-3]}')
@@ -15,4 +22,4 @@ async def ping(ctx):
     
     
 
-bot.run('your token here')
+bot.run(CONFIG['token'])
